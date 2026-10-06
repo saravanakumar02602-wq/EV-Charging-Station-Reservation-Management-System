@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Make Payment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef7f4;
+        }
+
+        .container {
+            width: 450px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #087f5b;
+        }
+
+        .reservation {
+            background: #e8f8f2;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 11px;
+            margin-top: 7px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #087f5b;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #056b4d;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #087f5b;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+{% include "_navbar.html" %}
+
+<div class="container">
+
+    <h1>💳 Make Payment</h1>
+
+    <div class="reservation">
+
+        <strong>⚡ {{ reservation.station_name }}</strong><br>
+
+        📍 {{ reservation.location }}<br>
+
+        🔌 Slot: {{ reservation.slot_number }}<br>
+
+        🚗 Vehicle: {{ reservation.vehicle_number }}<br>
+
+        📅 Date: {{ reservation.reservation_date }}<br>
+
+        🕐 {{ reservation.start_time }} - {{ reservation.end_time }}<br>
+
+        💰 Amount: ₹{{ amount }}
+
+    </div>
+
+    <form method="POST">
+
+        <label>Payment Mode</label>
+
+        <select name="payment_mode" required>
+
+            <option value="">Select Payment Method</option>
+            <option value="UPI">UPI</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="Net Banking">Net Banking</option>
+            <option value="Cash">Cash</option>
+
+        </select>
+
+        <button type="submit">
+            Pay ₹{{ amount }}
+        </button>
+
+    </form>
+
+    <a href="/my-reservations" class="back">
+        ← Back to My Reservations
+    </a>
+
+</div>
+</body>
+</html>

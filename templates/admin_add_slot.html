@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Charging Slot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f1f5f9;
+        }
+
+        .box {
+            width: 450px;
+            margin: 60px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #172554;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            margin-top: 7px;
+            box-sizing: border-box;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 8px;
+            background: #16a34a;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+{% include "_navbar.html" %}
+
+<div class="box">
+
+    <h2>➕ Add Charging Slot</h2>
+
+    <form method="POST">
+
+        <label>Charging Station</label>
+
+        <select name="station_id" required>
+
+            <option value="">
+                Select Station
+            </option>
+
+            {% for station in stations %}
+
+            <option value="{{ station.station_id }}">
+                {{ station.station_name }} - {{ station.location }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <label>Slot Number</label>
+
+        <input
+            type="text"
+            name="slot_number"
+            placeholder="Example: S01"
+            required
+        >
+
+
+        <label>Charger Type</label>
+
+        <select name="charger_type" required>
+
+            <option value="">
+                Select Charger Type
+            </option>
+
+            <option value="AC Charger">
+                AC Charger
+            </option>
+
+            <option value="DC Fast Charger">
+                DC Fast Charger
+            </option>
+
+        </select>
+
+
+        <label>Status</label>
+
+        <select name="status">
+
+            <option value="AVAILABLE">
+                AVAILABLE
+            </option>
+
+            <option value="OCCUPIED">
+                OCCUPIED
+            </option>
+
+        </select>
+
+
+        <button type="submit">
+            Add Charging Slot
+        </button>
+
+    </form>
+
+    <a class="back" href="/admin/slots">
+        ← Back to Slots
+    </a>
+
+</div>
+</body>
+</html>

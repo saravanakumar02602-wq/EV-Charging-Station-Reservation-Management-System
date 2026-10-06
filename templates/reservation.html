@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Reserve Charging Slot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef7f4;
+        }
+
+        .container {
+            width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #087f5b;
+        }
+
+        .slot-info {
+            background: #e8f8f2;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 11px;
+            margin-top: 7px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #087f5b;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #056b4d;
+        }
+
+        .error {
+            background: #ffe5e5;
+            color: #c0392b;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #087f5b;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>⚡ Reserve Charging Slot</h1>
+
+    <div class="slot-info">
+
+        <strong>{{ slot.station_name }}</strong><br>
+
+        📍 {{ slot.location }}<br>
+
+        🔌 Slot: {{ slot.slot_number }}<br>
+
+        ⚡ Charger: {{ slot.charger_type }}
+
+    </div>
+
+    {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if vehicles %}
+
+    <form method="POST">
+
+        <label>Select Vehicle</label>
+
+        <select name="vehicle_id" required>
+
+            {% for vehicle in vehicles %}
+
+            <option value="{{ vehicle.vehicle_id }}">
+                {{ vehicle.vehicle_number }} - {{ vehicle.vehicle_model }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <label>Reservation Date</label>
+
+        <input
+            type="date"
+            name="reservation_date"
+            required
+        >
+
+
+        <label>Start Time</label>
+
+        <input
+            type="time"
+            name="start_time"
+            required
+        >
+
+
+        <label>End Time</label>
+
+        <input
+            type="time"
+            name="end_time"
+            required
+        >
+
+
+        <button type="submit">
+            Confirm Reservation
+        </button>
+
+    </form>
+
+    {% else %}
+
+        <p>
+            You don't have any registered vehicle.
+        </p>
+
+        <a href="/dashboard" class="back">
+            ← Back to Dashboard
+        </a>
+
+    {% endif %}
+
+    <a href="/dashboard" class="back">
+        ← Back to Dashboard
+    </a>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+        }
+
+        .header {
+            background: #172554;
+            color: white;
+            padding: 20px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header a {
+            color: white;
+            text-decoration: none;
+            background: #2563eb;
+            padding: 10px 16px;
+            border-radius: 7px;
+        }
+
+        .container {
+            padding: 35px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .add {
+            background: #16a34a;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .edit {
+            background: #f59e0b;
+            color: white;
+            padding: 7px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .delete {
+            background: #dc2626;
+            color: white;
+            padding: 7px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+{% include "_navbar.html" %}
+
+<div class="header">
+    <h2>⚡ EV Charging - Users</h2>
+    <a href="/admin">← Admin Dashboard</a>
+</div>
+
+<div class="container">
+
+    <div class="top">
+        <h1>👥 Manage Users</h1>
+
+        <a class="add" href="/admin/users/add">
+            + Add User
+        </a>
+    </div>
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for user in users %}
+
+        <tr>
+            <td>{{ user.user_id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone or '-' }}</td>
+
+            <td>
+                <a class="edit"
+                   href="/admin/users/edit/{{ user.user_id }}">
+                    ✏️ Edit
+                </a>
+
+                <a class="delete"
+                   href="/admin/users/delete/{{ user.user_id }}"
+                   onclick="return confirm('Delete this user?');">
+                    🗑️ Delete
+                </a>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+</body>
+</html>

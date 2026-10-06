@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ station.station_name if station is defined else "Charging Stations" }} - EV Charge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7f9;
+        }
+
+        .header {
+            background: #12343b;
+            color: white;
+            padding: 25px 50px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 25px;
+        }
+
+        .station-info {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .station-info p {
+            color: #666;
+        }
+
+        .slots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .slot {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .slot h2 {
+            margin-top: 0;
+        }
+
+        .available {
+            color: #16a085;
+            font-weight: bold;
+        }
+
+        .occupied {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .reserve {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 18px;
+            background: #16a085;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .reserve:hover {
+            background: #12876f;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 30px;
+            color: #12343b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+            .slots {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include "_navbar.html" %}
+
+    {% if stations is defined %}
+    <main class="page-container">
+        <header class="page-title">
+            <h1>⚡ Charging Stations</h1>
+            <p>Choose a nearby station and reserve your preferred charger.</p>
+        </header>
+
+        <section class="station-grid">
+            {% for station in stations %}
+            <article class="station-card">
+                <h2>🔋 {{ station.station_name }}</h2>
+                <p class="station-location">📍 {{ station.location }}</p>
+                <p>📞 {{ station.contact_number }}</p>
+                <a href="/station/{{ station.station_id }}" class="btn">
+                    View Charging Slots →
+                </a>
+            </article>
+            {% else %}
+            <article class="station-card">
+                <h2>No stations available</h2>
+                <p>Please check back later.</p>
+            </article>
+            {% endfor %}
+        </section>
+    </main>
+    {% else %}
+    <main class="container">
+
+        <div class="station-info">
+            <header class="page-title">
+                <h1>⚡ {{ station.station_name }}</h1>
+                <p>Choose a charging slot at this station.</p>
+            </header>
+            <h2>Charging Station Details</h2>
+            <p>📍 {{ station.location }}</p>
+            <p>📞 {{ station.contact_number }}</p>
+        </main>
+
+        <h2>Available Charging Slots</h2>
+
+        <div class="slots">
+
+            {% for slot in slots %}
+
+            <div class="slot">
+
+                <h2>🔌 {{ slot.slot_number }}</h2>
+
+                <p>
+                    Charger:
+                    <strong>{{ slot.charger_type }}</strong>
+                </p>
+
+                {% if slot.status == "AVAILABLE" %}
+
+                    <p class="available">
+                        ● AVAILABLE
+                    </p>
+
+                    <a
+                        class="reserve"
+                        href="/reserve/{{ slot.slot_id }}">
+                        Reserve Slot
+                    </a>
+
+                {% else %}
+
+                    <p class="occupied">
+                        ● OCCUPIED
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <a class="back" href="/dashboard">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+    {% endif %}
+</body>
+
+</html>

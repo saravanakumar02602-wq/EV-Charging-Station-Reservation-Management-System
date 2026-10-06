@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Stations - EV Charge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .report-table { width: 100%; border-collapse: collapse; background: white; }
+        .report-table th, .report-table td { padding: 14px; border-bottom: 1px solid #e2e9eb; text-align: left; }
+        .report-table th { background: #12343b; color: white; }
+        .table-wrap { overflow-x: auto; border-radius: 14px; box-shadow: var(--shadow); }
+    </style>
+</head>
+<body>
+    {% include "_navbar.html" %}
+    <main class="page-container">
+        <header class="page-title">
+            <h1>⚡ Manage Charging Stations</h1>
+            <p>Review the charging stations registered in the system.</p>
+            <a class="btn" href="/admin/stations/add">+ Add Station</a>
+        </header>
+        <div class="table-wrap">
+            <table class="report-table">
+                <thead>
+                    <tr><th>ID</th><th>Station</th><th>Location</th><th>Contact</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                    {% for station in stations %}
+                    <tr>
+                        <td>{{ station.station_id }}</td>
+                        <td>{{ station.station_name }}</td>
+                        <td>{{ station.location }}</td>
+                        <td>{{ station.contact_number }}</td>
+                        <td>
+                            <a href="/station/{{ station.station_id }}">View</a>
+                            <a href="/admin/stations/edit/{{ station.station_id }}">Edit</a>
+                            <a href="/admin/stations/delete/{{ station.station_id }}"
+                               onclick="return confirm('Delete this charging station?');">Delete</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="5">No charging stations found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EV ChargeHub - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7f9;
+            color: #222;
+        }
+
+        .navbar {
+            background: #12343b;
+            color: white;
+            padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 25px;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #666;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .stat-card h3 {
+            color: #777;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #16a085;
+        }
+
+        .stations-title {
+            margin-bottom: 20px;
+        }
+
+        .stations {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .station-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .station-card h2 {
+            margin-bottom: 10px;
+        }
+
+        .station-card p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 11px 18px;
+            background: #16a085;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #12876f;
+        }
+
+        @media (max-width: 700px) {
+            .stats,
+            .stations {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include "_navbar.html" %}
+
+    <main class="page-container">
+        <section class="hero">
+            <h1>⚡ Welcome, {{ name }}</h1>
+            <p>Find a charging station, reserve your slot, and manage your EV charging easily.</p>
+            <br>
+            <a href="/stations" class="btn">Find Charging Station →</a>
+        </section>
+
+        <section class="page-title">
+            <h1>Quick Overview</h1>
+            <p>Manage your electric vehicle charging activities.</p>
+        </section>
+
+        <section class="cards">
+            <article class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Charging Stations</h3>
+                <div class="value">{{ total_stations }}</div>
+            </article>
+            <article class="card">
+                <div class="card-icon">🔌</div>
+                <h3>Available Slots</h3>
+                <div class="value">{{ available_slots }}</div>
+            </article>
+            <article class="card">
+                <div class="card-icon">📅</div>
+                <h3>Reservations</h3>
+                <a class="value" href="/my-reservations">Manage →</a>
+            </article>
+            <article class="card">
+                <div class="card-icon">💳</div>
+                <h3>Payments</h3>
+                <div class="value">Secure</div>
+            </article>
+        </section>
+    </main>
+</body>
+
+</html>

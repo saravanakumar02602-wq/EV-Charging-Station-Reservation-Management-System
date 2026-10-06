@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef7f4;
+        }
+
+        .container {
+            width: min(450px, calc(100% - 40px));
+            margin: 100px auto;
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+        .success {
+            font-size: 60px;
+        }
+
+        h1 {
+            color: #087f5b;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            background: #087f5b;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+{% include "_navbar.html" %}
+<div class="container">
+    <div class="success">✅</div>
+    <h1>Payment Successful!</h1>
+    <p>Your charging reservation has been successfully paid.</p>
+    <p>Reservation ID: <strong>{{ reservation_id }}</strong></p>
+    <a href="/my-reservations">View My Reservations</a>
+</div>
+</body>
+</html>

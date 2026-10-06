@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Reservations - EV Charge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .report-table { width: 100%; border-collapse: collapse; background: white; }
+        .report-table th, .report-table td { padding: 12px; border-bottom: 1px solid #e2e9eb; text-align: left; white-space: nowrap; }
+        .report-table th { background: #12343b; color: white; }
+        .table-wrap { overflow-x: auto; border-radius: 14px; box-shadow: var(--shadow); }
+        .cancel-link { color: #a62e2a; }
+    </style>
+</head>
+<body>
+    {% include "_navbar.html" %}
+    <main class="page-container">
+        <header class="page-title">
+            <h1>📅 Manage Reservations</h1>
+            <p>View customer reservation details and status.</p>
+        </header>
+        <div class="table-wrap">
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Customer</th><th>Vehicle</th><th>Station</th>
+                        <th>Slot</th><th>Charger</th><th>Date</th><th>Start</th><th>End</th><th>Status</th><th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reservation in reservations %}
+                    <tr>
+                        <td>{{ reservation.reservation_id }}</td>
+                        <td>{{ reservation.customer_name }}</td>
+                        <td>{{ reservation.vehicle_number }} ({{ reservation.vehicle_model }})</td>
+                        <td>{{ reservation.station_name }}</td>
+                        <td>{{ reservation.slot_number }}</td>
+                        <td>{{ reservation.charger_type }}</td>
+                        <td>{{ reservation.reservation_date }}</td>
+                        <td>{{ reservation.start_time }}</td>
+                        <td>{{ reservation.end_time }}</td>
+                        <td>{{ reservation.status }}</td>
+                        <td>
+                            {% if reservation.status != "CANCELLED" %}
+                            <a class="cancel-link"
+                               href="/admin/reservations/cancel/{{ reservation.reservation_id }}"
+                               onclick="return confirm('Cancel this reservation?');">Cancel</a>
+                            {% else %}
+                            —
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="11">No reservations found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

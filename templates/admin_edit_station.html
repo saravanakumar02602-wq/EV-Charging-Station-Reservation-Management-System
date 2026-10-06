@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Station - EV Charge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include "_navbar.html" %}
+    <main class="page-container">
+        <form class="form-card" method="post">
+            <h1>✏️ Edit Charging Station</h1>
+            <label for="station_name">Station Name</label>
+            <input id="station_name" name="station_name" type="text" value="{{ station.station_name }}" required>
+            <label for="location">Location</label>
+            <input id="location" name="location" type="text" value="{{ station.location }}" required>
+            <label for="contact_number">Contact Number</label>
+            <input id="contact_number" name="contact_number" type="tel" value="{{ station.contact_number or '' }}">
+            <div class="form-actions">
+                <button class="btn" type="submit">Save Changes</button>
+                <a class="back-link" href="/admin/stations">Cancel</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

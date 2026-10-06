@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Charging Slot - EV Charge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include "_navbar.html" %}
+    <main class="page-container">
+        <form class="form-card" method="post">
+            <h1>✏️ Edit Charging Slot</h1>
+            <label for="station_id">Charging Station</label>
+            <select id="station_id" name="station_id" required>
+                {% for station in stations %}
+                <option value="{{ station.station_id }}" {% if station.station_id == slot.station_id %}selected{% endif %}>
+                    {{ station.station_name }} - {{ station.location }}
+                </option>
+                {% endfor %}
+            </select>
+            <label for="slot_number">Slot Number</label>
+            <input id="slot_number" name="slot_number" type="text" value="{{ slot.slot_number }}" required>
+            <label for="charger_type">Charger Type</label>
+            <select id="charger_type" name="charger_type" required>
+                <option value="AC Charger" {% if slot.charger_type == "AC Charger" %}selected{% endif %}>AC Charger</option>
+                <option value="DC Fast Charger" {% if slot.charger_type == "DC Fast Charger" %}selected{% endif %}>DC Fast Charger</option>
+            </select>
+            <label for="status">Status</label>
+            <select id="status" name="status" required>
+                <option value="AVAILABLE" {% if slot.status == "AVAILABLE" %}selected{% endif %}>AVAILABLE</option>
+                <option value="OCCUPIED" {% if slot.status == "OCCUPIED" %}selected{% endif %}>OCCUPIED</option>
+            </select>
+            <div class="form-actions">
+                <button class="btn" type="submit">Save Changes</button>
+                <a class="back-link" href="/admin/slots">Cancel</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

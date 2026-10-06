@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User - EV Charge</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include "_navbar.html" %}
+    <main class="page-container">
+        <form class="form-card" method="post">
+            <h1>➕ Add User</h1>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required>
+            <div class="form-actions">
+                <button class="btn" type="submit">Create User</button>
+                <a class="back-link" href="/admin/users">Cancel</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
